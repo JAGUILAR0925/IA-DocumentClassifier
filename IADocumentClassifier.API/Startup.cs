@@ -4,6 +4,7 @@ namespace IADocumentClassifier.API
 {
     using AutoMapper;
     using FluentValidation.AspNetCore;
+    using IADocumentClassifier.Cors.Entities;
     using IADocumentClassifier.Cors.Interfaces;
     using IADocumentClassifier.Cors.Services;
     using IADocumentClassifier.Infrastructure.Data;
@@ -74,6 +75,21 @@ namespace IADocumentClassifier.API
 
             services.AddTransient<IRolesRepository, RolesRepository>();
             services.AddTransient<IRolesServices, RolesServices>();
+
+            services.AddTransient<IPermissionRepository, PermissionRepository>();
+            services.AddTransient<IPermissionsServices, PermissionsServices>();
+
+            services.AddTransient<IClientDocumentTypeRepository, ClientDocumentTypeRepository>();
+            services.AddTransient<IClientDocumentTypeServices, ClientDocumentTypeServices>();
+
+            services.AddTransient<ISetupRepository, SetupRepository>();
+            services.AddTransient<ISetupServices, SetupServices>();
+
+            services.AddTransient<IRolesPermissionRepository, RolesPermissionRepository>();
+            services.AddTransient<IRolesPermissionServices, RolesPermissionServices>();
+
+            services.AddTransient<IRolesClientRepository, RolesClientRepositorycs>();
+            services.AddTransient<IRolesClientServices, RolesClientServices>();
 
             services.AddSingleton<IUrlServices>(provider =>
             {

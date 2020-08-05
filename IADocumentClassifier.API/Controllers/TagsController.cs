@@ -11,6 +11,7 @@ namespace IADocumentClassifier.API.Controllers
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using static IADocumentClassifier.Cors.Exceptions.MessageHandlercs;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -93,7 +94,7 @@ namespace IADocumentClassifier.API.Controllers
             }
             catch (Exception ex)
             {
-                throw new BusinessException(ex.Message);
+                throw new BusinessException(MessageCodes.PROPERTY_NO_VALID, GetErrorDescription(MessageCodes.PROPERTY_NO_VALID), ex.Message);
             }
 
         }

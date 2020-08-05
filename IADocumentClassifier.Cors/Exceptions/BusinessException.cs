@@ -9,7 +9,7 @@ namespace IADocumentClassifier.Cors.Exceptions
 
         }
 
-        public BusinessException(string message) : base(message)
+        public BusinessException(string MessageCodes, string ErrorDescription, string message) : base(message)
         {
 
         }

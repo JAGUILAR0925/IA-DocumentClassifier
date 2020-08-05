@@ -1,5 +1,4 @@
 ﻿
-
 namespace IADocumentClassifier.API.Controllers
 {
     using System;
@@ -22,78 +21,79 @@ namespace IADocumentClassifier.API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class RolesController : ControllerBase
+    public class PermissionsController : ControllerBase
     {
-        private readonly IRolesServices  _rolesServices;
+        private readonly IPermissionsServices   _permissionsServices;
         private readonly IMapper _mapper;
         /// <summary>
         /// metodo para la inyeccion de dependencias mediante el contructor
         /// </summary>
-        /// <param name="rolesServices"></param>
+        /// <param name="permissionsServices"></param>
         /// <param name="mapper"></param>
-        public RolesController(IRolesServices rolesServices, IMapper mapper)
+        public PermissionsController(IPermissionsServices permissionsServices, IMapper mapper)
         {
-            _rolesServices = rolesServices;
+            _permissionsServices = permissionsServices;
             _mapper = mapper;
         }
 
         /// <summary>
-        /// Metodo para consultar todos los tipos de documentos
+        /// Metodo para consultar todos los permisos
         /// </summary>
         /// <returns>Ok</returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var role = await _rolesServices.GetAll();
-            var roleDto = _mapper.Map<IEnumerable<RolesDTO>>(role);
-            var response = new GenericResponse<IEnumerable<RolesDTO>>(roleDto);
+            var perm = await _permissionsServices.GetAll();
+            var permDto = _mapper.Map<IEnumerable<PermissionsDTO>>(perm);
+            var response = new GenericResponse<IEnumerable<PermissionsDTO>>(permDto);
             return Ok(response);
         }
 
         /// <summary>
-        /// Metodo para consultar por Roles
+        /// Metodo para consultar por permisos
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var role = await _rolesServices.GetById(id);
-            var roleDto = _mapper.Map<RolesDTO>(role);
-            var response = new GenericResponse<RolesDTO>(roleDto);
+            var perm = await _permissionsServices.GetById(id);
+            var permDto = _mapper.Map<PermissionsDTO>(perm);
+            var response = new GenericResponse<PermissionsDTO>(permDto);
             return Ok(response);
         }
 
         /// <summary>
-        /// Metodo para crear Roles
+        /// Metodo para Crear Permisos
         /// </summary>
-        /// <param name="rolesDto"></param>
-        /// <returns></returns>
+        /// <param name="permDto"></param>
+        /// <returns>Ok</returns>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] RolesDTO rolesDto)
+        public async Task<IActionResult> Post([FromBody] PermissionsDTO permDto)
         {
-            var role = _mapper.Map<Roles>(rolesDto);
-            await _rolesServices.Add(role);
-            rolesDto = _mapper.Map<RolesDTO>(role);
+            var permiso = _mapper.Map<Permissions>(permDto);
+            await _permissionsServices.Add(permiso);
+            permDto = _mapper.Map<PermissionsDTO>(permiso);
 
-            var response = new GenericResponse<RolesDTO>(rolesDto);
+            var response = new GenericResponse<PermissionsDTO>(permDto);
             return Ok(response);
         }
+
         /// <summary>
-        /// Metodo para actulizar Roles
+        /// Metodo para actualizar permisos
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="rolesDto"></param>
-        /// <returns></returns>
+        /// <param name="permisosDto"></param>
+        /// <returns>Ok</returns>
         [HttpPut]
-        public async Task<IActionResult> Put(int id, RolesDTO rolesDto)
+        public async Task<IActionResult> Put(int id, PermissionsDTO permisosDto)
         {
             try
             {
-                var roles = _mapper.Map<Roles>(rolesDto);
-                roles.Rol_Id = id;
+                var permiso = _mapper.Map<Permissions>(permisosDto);
+                permiso.Permissions_Id = id;
 
-                await _rolesServices.Update(roles);
+                await _permissionsServices.Update(permiso);
                 var response = new GenericResponse<bool>(true);
                 return Ok(response);
             }
@@ -104,14 +104,14 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para Eliminar o borrar Roles
+        /// Metodo para Eliminar permisos
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>Ok</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _rolesServices.Delete(id);
+            await _permissionsServices.Delete(id);
             var response = new GenericResponse<bool>(true);
             return Ok(response);
         }

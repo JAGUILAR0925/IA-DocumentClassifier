@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IADocumentClassifier.Cors",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IADocumentClassifier.Infrastructure", "IADocumentClassifier.Infrastructure\IADocumentClassifier.Infrastructure.csproj", "{52BFB396-11BF-463A-9479-5D32A71DB07B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IADocumentClassifier.UnitTest", "IADocumentClassifier.UnitTest\IADocumentClassifier.UnitTest.csproj", "{FDBADDE3-8C3A-4E6A-BD4F-B4E9A93DE8E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IADocumentClassifier.UnitTest", "IADocumentClassifier.UnitTest\IADocumentClassifier.UnitTest.csproj", "{65214D9B-EB7E-40E0-BD6E-E1D4FBC2B4C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{52BFB396-11BF-463A-9479-5D32A71DB07B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52BFB396-11BF-463A-9479-5D32A71DB07B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52BFB396-11BF-463A-9479-5D32A71DB07B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FDBADDE3-8C3A-4E6A-BD4F-B4E9A93DE8E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FDBADDE3-8C3A-4E6A-BD4F-B4E9A93DE8E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FDBADDE3-8C3A-4E6A-BD4F-B4E9A93DE8E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FDBADDE3-8C3A-4E6A-BD4F-B4E9A93DE8E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65214D9B-EB7E-40E0-BD6E-E1D4FBC2B4C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65214D9B-EB7E-40E0-BD6E-E1D4FBC2B4C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65214D9B-EB7E-40E0-BD6E-E1D4FBC2B4C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65214D9B-EB7E-40E0-BD6E-E1D4FBC2B4C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

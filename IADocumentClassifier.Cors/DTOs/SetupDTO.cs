@@ -10,6 +10,7 @@ namespace IADocumentClassifier.Cors.DTOs
         public int Setup_Id { get; set; }
         public string Name { get; set; }
         public string ValueParameter { get; set; }
+        public int Client_Id { get; set; }
         public Boolean Status { get; set; }
     }
 }

@@ -4,6 +4,48 @@
         <name>IADocumentClassifier.API</name>
     </assembly>
     <members>
+        <member name="M:IADocumentClassifier.API.Controllers.ClientDocumentTypeController.#ctor(IADocumentClassifier.Cors.Interfaces.IClientDocumentTypeServices,AutoMapper.IMapper)">
+            <summary>
+            metodo para la inyeccion de dependencias mediante el contructor
+            </summary>
+            <param name="permissionsServices"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.ClientDocumentTypeController.GetAll">
+            <summary>
+            Metodo para consultar todos los Clientes por tipos de documentos
+            </summary>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.ClientDocumentTypeController.GetById(System.Int32)">
+            <summary>
+            Metodo para consultar por Clientes por tipo de documentos
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.ClientDocumentTypeController.Post(IADocumentClassifier.Cors.DTOs.ClientDocumentTypeDTO)">
+            <summary>
+            Metodo para Crear Clientes por tipo de documentos
+            </summary>
+            <param name="clieDocDto"></param>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.ClientDocumentTypeController.Put(System.Int32,IADocumentClassifier.Cors.DTOs.ClientDocumentTypeDTO)">
+            <summary>
+            Metodo para actualizar Clientes por tipo de documentos
+            </summary>
+            <param name="id"></param>
+            <param name="clieDocDto"></param>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.ClientDocumentTypeController.Delete(System.Int32)">
+            <summary>
+            Metodo para Eliminar Clientes por tipo de documentos
+            </summary>
+            <param name="id"></param>
+            <returns>Ok</returns>
+        </member>
         <member name="M:IADocumentClassifier.API.Controllers.ClientsController.GetAll(IADocumentClassifier.Cors.QueryFilters.ClientsQueryFilters)">
             <summary>
             Metodo para consultar todos los clientes
@@ -81,6 +123,83 @@
             <param name="id"></param>
             <returns>Ok</returns>
         </member>
+        <member name="M:IADocumentClassifier.API.Controllers.PermissionsController.#ctor(IADocumentClassifier.Cors.Interfaces.IPermissionsServices,AutoMapper.IMapper)">
+            <summary>
+            metodo para la inyeccion de dependencias mediante el contructor
+            </summary>
+            <param name="permissionsServices"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.PermissionsController.GetAll">
+            <summary>
+            Metodo para consultar todos los permisos
+            </summary>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.PermissionsController.GetById(System.Int32)">
+            <summary>
+            Metodo para consultar por permisos
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.PermissionsController.Post(IADocumentClassifier.Cors.DTOs.PermissionsDTO)">
+            <summary>
+            Metodo para Crear Permisos
+            </summary>
+            <param name="permDto"></param>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.PermissionsController.Put(System.Int32,IADocumentClassifier.Cors.DTOs.PermissionsDTO)">
+            <summary>
+            Metodo para actualizar permisos
+            </summary>
+            <param name="id"></param>
+            <param name="permisosDto"></param>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.PermissionsController.Delete(System.Int32)">
+            <summary>
+            Metodo para Eliminar permisos
+            </summary>
+            <param name="id"></param>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.RolesClienteController.GetAll">
+            <summary>
+            Metodo para consultar todos los roles clientes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.RolesClienteController.GetById(System.Int32)">
+            <summary>
+            Metodo para consultar por roles clientes
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.RolesClienteController.Post(IADocumentClassifier.Cors.DTOs.RolesClientDTO)">
+            <summary>
+            Metodo para crear roles clientes
+            </summary>
+            <param name="rolesclieDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.RolesClienteController.Put(System.Int32,IADocumentClassifier.Cors.DTOs.RolesClientDTO)">
+            <summary>
+            Metodo para actualizar roles clientes
+            </summary>
+            <param name="id"></param>
+            <param name="rolecliDto"></param>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.RolesClienteController.Delete(System.Int32)">
+            <summary>
+            Metodo para borrar los roles clientes
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:IADocumentClassifier.API.Controllers.RolesController.#ctor(IADocumentClassifier.Cors.Interfaces.IRolesServices,AutoMapper.IMapper)">
             <summary>
             metodo para la inyeccion de dependencias mediante el contructor
@@ -122,6 +241,63 @@
             </summary>
             <param name="id"></param>
             <returns></returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.RolesPermissionController.GetAll">
+            <summary>
+            Metodo para consultar todos los roles por permisos
+            </summary>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.RolesPermissionController.GetById(System.Int32)">
+            <summary>
+            Metodo para consultar por roles por permisos
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:IADocumentClassifier.API.Controllers.RolesPermissionController.Post(IADocumentClassifier.Cors.DTOs.RolesPermissionDTO)" -->
+        <member name="M:IADocumentClassifier.API.Controllers.RolesPermissionController.Put(System.Int32,IADocumentClassifier.Cors.DTOs.RolesPermissionDTO)">
+            <summary>
+            Metodo para actualizar roles permisos
+            </summary>
+            <param name="id"></param>
+            <param name="roleperDto"></param>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.RolesPermissionController.Delete(System.Int32)">
+            <summary>
+            Metodo para borrar roles permisos
+            </summary>
+            <param name="id"></param>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.SetupController.GetAll">
+            <summary>
+            Metodo para consultar las configuraciones
+            </summary>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.SetupController.GetById(System.Int32)">
+            <summary>
+            Metodo para consultar por configuración
+            </summary>
+            <param name="id"></param>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.SetupController.Post(IADocumentClassifier.Cors.DTOs.SetupDTO)">
+            <summary>
+            Metodo para crear configuraciones
+            </summary>
+            <param name="setupDto"></param>
+            <returns>Ok</returns>
+        </member>
+        <member name="M:IADocumentClassifier.API.Controllers.SetupController.Put(System.Int32,IADocumentClassifier.Cors.DTOs.SetupDTO)">
+            <summary>
+            Metodo para Actualizar configuraciones
+            </summary>
+            <param name="id"></param>
+            <param name="setupDto"></param>
+            <returns>Ok</returns>
         </member>
         <member name="M:IADocumentClassifier.API.Controllers.TagsController.#ctor(IADocumentClassifier.Cors.Interfaces.ITagServices,AutoMapper.IMapper)">
             <summary>
