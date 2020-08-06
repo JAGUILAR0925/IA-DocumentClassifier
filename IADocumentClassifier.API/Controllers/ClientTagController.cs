@@ -22,11 +22,13 @@ namespace IADocumentClassifier.API.Controllers
     [ApiController]
     public class ClientTagController : ControllerBase
     {
-
-        IMapper _mapper;
-        public ClientTagController(IMapper mapper)
+        private readonly IClientTag _clientTag;
+        private readonly IMapper _mapper;
+        public ClientTagController(IClientTag clientTag, IMapper mapper)
         {
+            _clientTag = clientTag;
             _mapper = mapper;
         }
+
     }
 }
