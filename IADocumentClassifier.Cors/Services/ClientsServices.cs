@@ -1,9 +1,11 @@
 ﻿
 namespace IADocumentClassifier.Cors.Interfaces
 {
+    using AIDocumentClassifier.Cors.CustomEntities;
     using IADocumentClassifier.Cors.CustomEntities;
     using IADocumentClassifier.Cors.Entities;
     using IADocumentClassifier.Cors.QueryFilters;
+    using Microsoft.Extensions.Options;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -11,14 +13,19 @@ namespace IADocumentClassifier.Cors.Interfaces
     public class ClientsServices : IClientsServices
     {
         private readonly IClientsRepository _clientsRepository;
+        private readonly PaginationOptions _paginationOptions;
 
-        public ClientsServices(IClientsRepository clientsRepository)
+        public ClientsServices(IClientsRepository clientsRepository, IOptions<PaginationOptions> options)
         {
             _clientsRepository = clientsRepository;
+            _paginationOptions = options.Value;
         }
 
         public async Task<PagedList<Clients>> GetAll(ClientsQueryFilters filters)
         {
+            filters.PageNumber = filters.PageNumber == 0 ? _paginationOptions.DefaultPageNumber : filters.PageNumber;
+            filters.PageSize = filters.PageSize == 0 ? _paginationOptions.DefaultPageSize : filters.PageSize;
+
             var client = await _clientsRepository.GetAll();
             
             if(filters.clientId != null)

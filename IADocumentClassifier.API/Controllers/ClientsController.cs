@@ -10,6 +10,7 @@ namespace IADocumentClassifier.API.Controllers
     using IADocumentClassifier.Cors.Interfaces;
     using IADocumentClassifier.Cors.QueryFilters;
     using IADocumentClassifier.Infrastructure.Interface;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
     using System;
@@ -18,14 +19,24 @@ namespace IADocumentClassifier.API.Controllers
     using System.Threading.Tasks;
     using static IADocumentClassifier.Cors.Exceptions.MessageHandlercs;
 
+    /// <summary>
+    /// ClientsController
+    /// </summary>
+    //[Authorize]
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController]    
     public class ClientsController : ControllerBase
     {
         private readonly IClientsServices _clientsServices;
         private readonly IMapper _mapper;
         private readonly IUrlServices _urlServices;
 
+        /// <summary>
+        /// ClientsController Constructor
+        /// </summary>
+        /// <param name="clientsServices"></param>
+        /// <param name="mapper"></param>
+        /// <param name="urlServices"></param>
         public ClientsController(IClientsServices clientsServices,IMapper mapper, IUrlServices urlServices)
         {
             _clientsServices = clientsServices;
@@ -34,32 +45,18 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para consultar todos los clientes
+        ///  Retrieve all Clients
         /// </summary>
         /// <returns>ok</returns>
         [HttpGet(Name = nameof(GetAll))]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(GenericResponse<IEnumerable<Clients>>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> GetAll([FromQuery]ClientsQueryFilters filters)
         {
-            try
-            {
+           
                 var client = await _clientsServices.GetAll(filters);
                 var clientDto = _mapper.Map<IEnumerable<ClientsDTO>>(client);
-
-
-                var metadata = new Metadata
-                {
-                    TotalCount = client.TotalCount,
-                    PageSize = client.PageSize,
-                    CurrentPage = client.CurrentPage,
-                    TotalPages = client.TotalPages,
-                    HasNextPage = client.HasNextPage,
-                    HasPreviousPage = client.HasPreviousPage,
-                    //NextPageUrl = _urlServices.GetPaginationUri(filters, Url.RouteUrl(Url.ToString())).ToString(),
-                    //PreviousPageUrl = _urlServices.GetPaginationUri(filters, Url.RouteUrl(nameof(GetAll))).ToString()
-                };
-
+                Metadata metadata = MetadaFill(client);
 
                 var response = new GenericResponse<IEnumerable<ClientsDTO>>(clientDto)
                 {
@@ -67,14 +64,23 @@ namespace IADocumentClassifier.API.Controllers
                 };
 
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+                return Ok(response);          
+        }
 
-                return Ok(response);
-            }
-            catch(Exception ex)
+        private static Metadata MetadaFill(PagedList<Clients> client)
+        {
+            var metadata = new Metadata
             {
-                throw new BusinessException(MessageCodes.PROPERTY_NO_VALID, GetErrorDescription(MessageCodes.PROPERTY_NO_VALID), ex.Message);
-            }
-            
+                TotalCount = client.TotalCount,
+                PageSize = client.PageSize,
+                CurrentPage = client.CurrentPage,
+                TotalPages = client.TotalPages,
+                HasNextPage = client.HasNextPage,
+                HasPreviousPage = client.HasPreviousPage,
+                //NextPageUrl = _urlServices.GetPaginationUri(filters, Url.RouteUrl(Url.ToString())).ToString(),
+                //PreviousPageUrl = _urlServices.GetPaginationUri(filters, Url.RouteUrl(nameof(GetAll))).ToString()
+            };
+            return metadata;
         }
 
         /// <summary>

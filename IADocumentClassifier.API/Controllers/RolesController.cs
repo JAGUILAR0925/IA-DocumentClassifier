@@ -38,7 +38,7 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para consultar todos los tipos de documentos
+        /// Metodo para consultar todos los Roles
         /// </summary>
         /// <returns>Ok</returns>
         [HttpGet]

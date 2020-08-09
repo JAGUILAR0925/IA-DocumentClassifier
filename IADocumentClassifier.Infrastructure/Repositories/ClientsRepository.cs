@@ -18,14 +18,12 @@ namespace IADocumentClassifier.Infrastructure.Repositories
 
         public async Task<IEnumerable<Clients>> GetAll()
         {
-            var client = await _context.Clients.ToListAsync();
-            return client;
+            return await _context.Clients.ToListAsync();
         }
 
         public async Task<Clients> GetById(int id)
         {
-            var client = await _context.Clients.FirstOrDefaultAsync(x => x.Client_Id == id);
-            return client;
+            return await _context.Clients.FirstOrDefaultAsync(x => x.Client_Id == id);
         }
 
         public async Task Add(Clients client)

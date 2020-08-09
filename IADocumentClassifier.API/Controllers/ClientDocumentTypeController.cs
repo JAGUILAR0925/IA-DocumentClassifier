@@ -37,11 +37,13 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para consultar todos los Clientes por tipos de documentos
+        /// Retrieve all ClientDocumentType
         /// </summary>
         /// <returns>Ok</returns>
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet(Name = nameof(GetAllClientDocumentType))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type =typeof(GenericResponse<IEnumerable<ClientDocumentType>>))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetAllClientDocumentType()
         {
             var clieDoc = await _clientDocumentTypeServices.GetAll();
             var clieDocDto = _mapper.Map<IEnumerable<ClientDocumentTypeDTO>>(clieDoc);

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IADocumentClassifier.Cors\IADocumentClassifier.Cors.csproj" />
+    <ProjectReference Include="..\IADocumentClassifier.Cors\AIDocumentClassifier.Cors.csproj" />
   </ItemGroup>
 
 </Project>

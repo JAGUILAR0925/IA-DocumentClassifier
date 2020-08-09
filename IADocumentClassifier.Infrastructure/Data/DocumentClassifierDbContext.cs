@@ -4,6 +4,8 @@ namespace IADocumentClassifier.Infrastructure.Data
     using IADocumentClassifier.Cors.Entities;
     using IADocumentClassifier.Infrastructure.Data.Configurations;
     using Microsoft.EntityFrameworkCore;
+    using System.Reflection;
+
     public partial class DocumentClassifierDbContext : DbContext
     {
         DocumentClassifierDbContext()
@@ -27,16 +29,7 @@ namespace IADocumentClassifier.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new DocumentTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new TagConfigurationcs());
-            modelBuilder.ApplyConfiguration(new ClientsConfiguration());
-            modelBuilder.ApplyConfiguration(new ClientDocumentTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new ClientTagConfiguration());
-            modelBuilder.ApplyConfiguration(new PermissionsConfiguration());
-            modelBuilder.ApplyConfiguration(new RolesConfiguration());
-            modelBuilder.ApplyConfiguration(new RolesClientConfiguration());
-            modelBuilder.ApplyConfiguration(new RolesPermissionConfiguration());
-            modelBuilder.ApplyConfiguration(new SetupConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

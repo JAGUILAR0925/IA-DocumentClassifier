@@ -2,6 +2,7 @@
 
 namespace IADocumentClassifier.API
 {
+    using AIDocumentClassifier.Cors.CustomEntities;
     using AutoMapper;
     using FluentValidation.AspNetCore;
     using IADocumentClassifier.Cors.Entities;
@@ -12,6 +13,7 @@ namespace IADocumentClassifier.API
     using IADocumentClassifier.Infrastructure.Interface;
     using IADocumentClassifier.Infrastructure.Repositories;
     using IADocumentClassifier.Infrastructure.Services;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -19,29 +21,42 @@ namespace IADocumentClassifier.API
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
-    using NSwag;
-    using NSwag.Generation.Processors.Security;
+    //using NSwag;
+    //using NSwag.Generation.Processors.Security;
     using System;
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Text;
     using OpenApiInfo = Microsoft.OpenApi.Models.OpenApiInfo;
-    using OpenApiSecurityScheme = NSwag.OpenApiSecurityScheme;
+    //using OpenApiSecurityScheme = NSwag.OpenApiSecurityScheme;
 
     /// <summary>
     /// Metodo de inicio o Meadowhall
     /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Setup
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Configuration
+        /// </summary>
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// ConfigureServices
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -62,6 +77,8 @@ namespace IADocumentClassifier.API
             services.AddControllers();
             services.AddDbContext<DocumentClassifierDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("CognitiveServices")));
+
+      
 
             //Resuelve dependencias para trabajar con SQL y con las interface de Repositorio y Services
             services.AddTransient<IDocumentsTypesRepository, DocumentTypeRepository>();
@@ -91,6 +108,9 @@ namespace IADocumentClassifier.API
             services.AddTransient<IRolesClientRepository, RolesClientRepositorycs>();
             services.AddTransient<IRolesClientServices, RolesClientServices>();
 
+            services.AddTransient<IClientTagRepository, CientTagRepository>();
+            services.AddTransient<IClientTagServices, ClientTagServices>();
+
             services.AddSingleton<IUrlServices>(provider =>
             {
                 var accesor = provider.GetRequiredService<IHttpContextAccessor>();
@@ -100,45 +120,72 @@ namespace IADocumentClassifier.API
 
             });
 
-            services.AddMvc(options =>
-            {
-                options.Filters.Add<ValidationFilter>();
-
-            }).AddFluentValidation(options =>
-            { 
-                options.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()); 
-            });
+            services.Configure<PaginationOptions>(Configuration.GetSection("Pagination"));
 
             //Resuelve dependencias para trabajar con CosmosDB 
             //services.AddTransient<IDocumentsTypesRepository, DocumentTypeCosmosDbRepository>();
 
             //Definicion de seguridad por JWT Token con Swagger
-            services.AddOpenApiDocument(document =>
-            {
-                document.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
-                {
-                    Type = OpenApiSecuritySchemeType.ApiKey,
-                    Name = "Authorization",
-                    In = OpenApiSecurityApiKeyLocation.Header,
-                    Description = "Type into the textbox: Bearer {your JWT token}."
-                });
+            //services.AddOpenApiDocument(document =>
+            //{
+            //    document.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+            //    {
+            //        Type = OpenApiSecuritySchemeType.ApiKey,
+            //        Name = "Authorization",
+            //        In = OpenApiSecurityApiKeyLocation.Header,
+            //        Description = "Type into the textbox: Bearer {your JWT token}."
+            //    });
 
-                document.OperationProcessors.Add(
-                    new AspNetCoreOperationSecurityScopeProcessor("JWT"));
-            });
+            //    document.OperationProcessors.Add(
+            //        new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            //});
 
             //para trabajar con swagger-para documentar la API
-
-
-            services.AddSwaggerGen(Configuracion =>
-            Configuracion.SwaggerDoc("v1", new OpenApiInfo { Title= "IA Document Classifier API", Version="v1"}));
+            services.AddSwaggerGen(doc =>
+            {
+                doc.SwaggerDoc("v1", new OpenApiInfo { Title = "AI Document Classifier API", Version = "v1" });
+            });
 
             var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             services.AddSwaggerGen(Configuration => Configuration.IncludeXmlComments(xmlPath));
+
+            // Configuración Seguridad de la aplicacion
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(options =>
+            //{
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = true,
+            //        ValidateAudience = true,
+            //        ValidateLifetime = true,
+            //        ValidateIssuerSigningKey = true,
+            //        ValidIssuer = Configuration["Authentication:Issuer"],
+            //        ValidAudience = Configuration["Authentication:Audience"],
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetConnectionString("SecretKey")))
+            //    };
+            //});
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<ValidationFilter>();
+
+            }).AddFluentValidation(options =>
+            {
+                options.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// Configure
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -146,11 +193,19 @@ namespace IADocumentClassifier.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseOpenApi();
-            app.UseSwaggerUi3();
-
             app.UseHttpsRedirection();
+
+            //app.UseOpenApi();
+            //app.UseSwaggerUi3();
+           
             app.UseRouting();
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "AI Document Classifier API");
+            });
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

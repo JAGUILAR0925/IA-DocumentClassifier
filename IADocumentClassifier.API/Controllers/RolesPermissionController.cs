@@ -26,6 +26,7 @@ namespace IADocumentClassifier.API.Controllers
             _rolesPermissionServices = rolesPermissionServices;
             _mapper = mapper;
         }
+
         /// <summary>
         /// Metodo para consultar todos los roles por permisos
         /// </summary>
@@ -53,10 +54,10 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para crear roles por permisos
+        /// Metodo para crear Roles permisos
         /// </summary>
         /// <param name="rolesperDto"></param>
-        /// <returns>Ok/returns>
+        /// <returns>Ok</returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] RolesPermissionDTO rolesperDto)
         {
