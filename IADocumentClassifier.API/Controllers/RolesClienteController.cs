@@ -97,7 +97,7 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para borrar los roles clientes
+        /// Metodo para remover los roles clientes
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

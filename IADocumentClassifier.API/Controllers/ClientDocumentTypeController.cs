@@ -2,6 +2,7 @@
 
 namespace IADocumentClassifier.API.Controllers
 {
+    using IADocumentClassifier.Cors.QueryFilters;
     using AutoMapper;
     using IADocumentClassifier.API.Responses;
     using IADocumentClassifier.Cors.CustomEntities;
@@ -9,8 +10,6 @@ namespace IADocumentClassifier.API.Controllers
     using IADocumentClassifier.Cors.Entities;
     using IADocumentClassifier.Cors.Exceptions;
     using IADocumentClassifier.Cors.Interfaces;
-    using IADocumentClassifier.Cors.QueryFilters;
-    using IADocumentClassifier.Infrastructure.Interface;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
     using System;
@@ -37,18 +36,42 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Retrieve all ClientDocumentType
+        ///  Metodo para consultar todos los Clientes x tipo de Documentos
         /// </summary>
         /// <returns>Ok</returns>
         [HttpGet(Name = nameof(GetAllClientDocumentType))]
         [ProducesResponseType((int)HttpStatusCode.OK, Type =typeof(GenericResponse<IEnumerable<ClientDocumentType>>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> GetAllClientDocumentType()
+        public async Task<IActionResult> GetAllClientDocumentType([FromQuery] ClientDocumentTypeQueryFilters filters)
         {
-            var clieDoc = await _clientDocumentTypeServices.GetAll();
-            var clieDocDto = _mapper.Map<IEnumerable<ClientDocumentTypeDTO>>(clieDoc);
-            var response = new GenericResponse<IEnumerable<ClientDocumentTypeDTO>>(clieDocDto);
-            return Ok(response);
+            var clientDocument = await _clientDocumentTypeServices.GetAll(filters);
+            var clientDocumentDto = _mapper.Map<IEnumerable<ClientDocumentTypeDTO>>(clientDocument);
+
+            Metadata metadata = MetadaFill(clientDocument);
+
+            var response = new GenericResponse<IEnumerable<ClientDocumentTypeDTO>>(clientDocumentDto)
+            {
+                meta = metadata
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+            return Ok(response);           
+        }
+
+        private static Metadata MetadaFill(PagedList<ClientDocumentType> clientDocument)
+        {
+            var metadata = new Metadata
+            {
+                TotalCount = clientDocument.TotalCount,
+                PageSize = clientDocument.PageSize,
+                CurrentPage = clientDocument.CurrentPage,
+                TotalPages = clientDocument.TotalPages,
+                HasNextPage = clientDocument.HasNextPage,
+                HasPreviousPage = clientDocument.HasPreviousPage,
+                //NextPageUrl = _urlServices.GetPaginationUri(filters, Url.RouteUrl(Url.ToString())).ToString(),
+                //PreviousPageUrl = _urlServices.GetPaginationUri(filters, Url.RouteUrl(nameof(GetAll))).ToString()
+            };
+            return metadata;
         }
 
         /// <summary>
@@ -106,7 +129,7 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para Eliminar Clientes por tipo de documentos
+        /// Metodo para remover Clientes por tipo de documentos
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Ok</returns>

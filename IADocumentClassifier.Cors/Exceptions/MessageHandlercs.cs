@@ -1,7 +1,7 @@
 ﻿
 namespace IADocumentClassifier.Cors.Exceptions
 {
-    using AIDocumentClassifier.Cors.Exceptions;
+    using IADocumentClassifier.Cors.Exceptions;
     using System;
     using System.Collections.Generic;
     using System.Globalization;

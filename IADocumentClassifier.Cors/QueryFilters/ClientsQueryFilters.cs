@@ -7,7 +7,6 @@ namespace IADocumentClassifier.Cors.QueryFilters
     {
         public int? clientId { get; set; }
         public int? identification { get; set; }
-        public Boolean status { get; set; }
-      
+        public Boolean status { get; set; }      
     }
 }

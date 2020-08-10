@@ -45,7 +45,7 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        ///  Retrieve all Clients
+        ///  Metodo para consultar todos los clientes
         /// </summary>
         /// <returns>ok</returns>
         [HttpGet(Name = nameof(GetAll))]
@@ -84,7 +84,7 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para consultar por cliente
+        /// Metodo para consultar por clientes
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -100,7 +100,7 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para Crear clientes
+        /// Metodo para crear nuevos clientes
         /// </summary>
         /// <param name="clientDto"></param>
         /// <returns></returns>
@@ -124,7 +124,7 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para Actualizar clientes
+        /// Metodo para actualizar datos de clientes
         /// </summary>
         /// <param name="id"></param>
         /// <param name="clientDto"></param>
@@ -148,7 +148,7 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para eliminar clientes
+        /// Metodo para remover clientes
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

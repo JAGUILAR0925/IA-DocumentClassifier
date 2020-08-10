@@ -1,6 +1,8 @@
 ﻿
 namespace IADocumentClassifier.Cors.Interfaces
 {
+    using IADocumentClassifier.Cors.QueryFilters;
+    using IADocumentClassifier.Cors.CustomEntities;
     using IADocumentClassifier.Cors.Entities;
     using System;
     using System.Collections.Generic;
@@ -9,7 +11,7 @@ namespace IADocumentClassifier.Cors.Interfaces
 
     public interface IClientDocumentTypeServices
     {
-        Task<IEnumerable<ClientDocumentType>> GetAll();
+        Task<PagedList<ClientDocumentType>> GetAll(ClientDocumentTypeQueryFilters filters);
         Task<ClientDocumentType> GetById(int id);
         Task Add(ClientDocumentType clientDoc);
         Task<bool> Update(ClientDocumentType clientDoc);

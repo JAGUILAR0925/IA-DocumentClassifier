@@ -98,7 +98,7 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para Eliminar Clientes por Tag
+        /// Metodo para remover Clientes por Tag
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Ok</returns>

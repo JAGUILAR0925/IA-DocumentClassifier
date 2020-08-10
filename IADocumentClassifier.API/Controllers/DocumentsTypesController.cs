@@ -48,10 +48,10 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para consultar especificamente un tipo de documento
+        /// Metodo para consultar por tipos de documentos
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>Ok</returns>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -62,7 +62,7 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para insertar tipos de documentos
+        /// Metodo para crear nuevos tipos de documentos
         /// </summary>
         /// <param name="documentypeDto"></param>
         /// <returns>Ok</returns>
@@ -78,7 +78,7 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para actualizar los tipos de datos
+        /// Metodo para actualizar los tipos de documentos
         /// </summary>
         /// <param name="id"></param>
         /// <param name="documentypeDto"></param>
@@ -102,7 +102,7 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para Eliminar tipos de documentos
+        /// Metodo para remover tipos de documentos
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Ok</returns>

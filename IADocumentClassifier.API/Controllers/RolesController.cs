@@ -104,7 +104,7 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para Eliminar o borrar Roles
+        /// Metodo para remover Roles
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

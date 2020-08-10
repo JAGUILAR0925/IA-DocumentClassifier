@@ -1,26 +1,53 @@
 ﻿
 namespace IADocumentClassifier.Cors.Services
 {
+    using AIDocumentClassifier.Cors.CustomEntities;
+    using IADocumentClassifier.Cors.QueryFilters;
+    using IADocumentClassifier.Cors.CustomEntities;
     using IADocumentClassifier.Cors.Entities;
     using IADocumentClassifier.Cors.Exceptions;
     using IADocumentClassifier.Cors.Interfaces;
+    using Microsoft.Extensions.Options;
     using System;
     using System.Collections.Generic;
     using System.Text;
     using System.Threading.Tasks;
     using static IADocumentClassifier.Cors.Exceptions.MessageHandlercs;
+    using System.Linq;
 
     public class ClientDocumentTypeServices:IClientDocumentTypeServices
     {
         private readonly IClientDocumentTypeRepository  _clientDocumentTypeRepository;
-        public ClientDocumentTypeServices(IClientDocumentTypeRepository clientDocumentTypeRepository)
+        private readonly PaginationOptions _paginationOptions;
+        public ClientDocumentTypeServices(IClientDocumentTypeRepository clientDocumentTypeRepository, IOptions<PaginationOptions> options)
         {
             _clientDocumentTypeRepository = clientDocumentTypeRepository;
+            _paginationOptions = options.Value;
         }
 
-        public async Task<IEnumerable<ClientDocumentType>> GetAll()
+        public async Task<PagedList<ClientDocumentType>> GetAll(ClientDocumentTypeQueryFilters filters)
         {
-            return await _clientDocumentTypeRepository.GetAll();
+            filters.PageNumber = filters.PageNumber == 0 ? _paginationOptions.DefaultPageNumber : filters.PageNumber;
+            filters.PageSize = filters.PageSize == 0 ? _paginationOptions.DefaultPageSize : filters.PageSize;
+            var clientDocumentType = await _clientDocumentTypeRepository.GetAll();
+
+            if (filters.clientDocumentType_Id > 0)
+            {
+                clientDocumentType = clientDocumentType.Where(x => x.ClientDocumentType_Id == filters.clientDocumentType_Id);
+            }
+
+            if (filters.client_Id > 0)
+            {
+                clientDocumentType = clientDocumentType.Where(x => x.Client_Id == filters.client_Id);
+            }
+
+            if (filters.documentType_Id > 0)
+            {
+                clientDocumentType = clientDocumentType.Where(x => x.DocumentType_Id == filters.documentType_Id);
+            }
+
+            var pageClient = PagedList<ClientDocumentType>.Create(clientDocumentType, filters.PageNumber, filters.PageSize);
+            return pageClient;
         }
 
         public async Task<ClientDocumentType> GetById(int id)

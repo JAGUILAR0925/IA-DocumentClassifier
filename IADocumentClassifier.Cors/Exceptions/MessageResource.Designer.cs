@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AIDocumentClassifier.Cors.Exceptions {
+namespace IADocumentClassifier.Cors.Exceptions {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace AIDocumentClassifier.Cors.Exceptions {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AIDocumentClassifier.Cors.Exceptions.MessageResource", typeof(MessageResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("IADocumentClassifier.Cors.Exceptions.MessageResource", typeof(MessageResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

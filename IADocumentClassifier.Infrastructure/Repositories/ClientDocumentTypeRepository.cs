@@ -21,8 +21,7 @@ namespace IADocumentClassifier.Infrastructure.Repositories
 
         public async Task<IEnumerable<ClientDocumentType>> GetAll()
         {
-            var client = await _context.ClientDocumentType.ToListAsync();
-            return client;
+            return await _context.ClientDocumentType.ToListAsync();
         }
 
         public async Task<ClientDocumentType> GetById(int id)

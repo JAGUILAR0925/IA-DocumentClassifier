@@ -98,5 +98,18 @@ namespace IADocumentClassifier.API.Controllers
                 throw new BusinessException(MessageCodes.PROPERTY_NO_VALID, GetErrorDescription(MessageCodes.PROPERTY_NO_VALID), ex.Message);
             }
         }
+
+        /// <summary>
+        /// Metodo para remover configuraciones
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Ok</returns>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _setupServices.Delete(id);
+            var response = new GenericResponse<bool>(true);
+            return Ok(response);
+        }
     }
 }

@@ -104,7 +104,7 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para Eliminar permisos
+        /// Metodo para remover permisos
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Ok</returns>

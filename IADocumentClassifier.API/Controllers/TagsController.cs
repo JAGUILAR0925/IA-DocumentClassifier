@@ -100,7 +100,7 @@ namespace IADocumentClassifier.API.Controllers
         }
 
         /// <summary>
-        /// Metodo para Borrar Tag
+        /// Metodo para remover Tag
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Ok</returns>
