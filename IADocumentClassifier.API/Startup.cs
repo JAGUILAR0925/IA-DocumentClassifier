@@ -52,7 +52,7 @@ namespace IADocumentClassifier.API
         /// </summary>
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        // This method gets called by the runtime. Use this method to add services to the containerName.
         /// <summary>
         /// ConfigureServices
         /// </summary>
@@ -111,6 +111,8 @@ namespace IADocumentClassifier.API
             services.AddTransient<IClientTagRepository, CientTagRepository>();
             services.AddTransient<IClientTagServices, ClientTagServices>();
 
+            services.AddTransient<IBlobServices, BlobServices>();
+
             services.AddSingleton<IUrlServices>(provider =>
             {
                 var accesor = provider.GetRequiredService<IHttpContextAccessor>();
@@ -131,7 +133,7 @@ namespace IADocumentClassifier.API
             //    document.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
             //    {
             //        Type = OpenApiSecuritySchemeType.ApiKey,
-            //        Name = "Authorization",
+            //        FileName = "Authorization",
             //        In = OpenApiSecurityApiKeyLocation.Header,
             //        Description = "Type into the textbox: Bearer {your JWT token}."
             //    });
